@@ -595,9 +595,13 @@
     <div class="header">
       <div class="header-left">
         <h1>Working Days Calculator</h1>
-        <p>Israel · Public holidays &amp; working days by month</p>
+        <p>Israel · working days by month</p>
       </div>
-      <div class="flag-badge"><span class="flag-emoji">🇮🇱</span> Israel · Fixed</div>
+      <div>
+        <div class="flag-badge"><span class="flag-emoji">🇮🇱</span> Israel · Fixed</div>
+        <div class="flag-badge"><span class="flag-emoji">📅</span> Current Year · <span id="currentYear"></span></div>
+      </div>
+
     </div>
 
     <!-- Error -->
@@ -641,11 +645,11 @@
         <div class="stat-value" id="statWork">—</div>
         <div class="stat-sub" id="statWorkSub">across selected period</div>
       </div>
-      <div class="stat red">
+      <!-- <div class="stat red">
         <div class="stat-label">Public holidays</div>
         <div class="stat-value" id="statHoliday">—</div>
         <div class="stat-sub">on weekdays</div>
-      </div>
+      </div> -->
       <div class="stat">
         <div class="stat-label">Weekend days</div>
         <div class="stat-value" id="statWeekend">—</div>
@@ -666,9 +670,9 @@
       <div class="legend-item">
         <div class="dot dot-weekend"></div> Weekend (Fri–Sat)
       </div>
-      <div class="legend-item">
+      <!-- <div class="legend-item">
         <div class="dot dot-holiday"></div> Public holiday
-      </div>
+      </div> -->
       <div class="legend-item">
         <div class="dot dot-today"></div> Today
       </div>
@@ -892,6 +896,9 @@
           cell.appendChild(tip);
         }
 
+        const getCurrentYearElement = document.getElementById('currentYear');
+        getCurrentYearElement.innerHTML = currentYear
+
         grid.appendChild(cell);
       }
 
@@ -902,7 +909,7 @@
     function renderStats(m) {
       const s = calcMonthStats(currentYear, m);
       document.getElementById('statWork').textContent = numWorkingDays;
-      document.getElementById('statHoliday').textContent = s.holidays;
+      // document.getElementById('statHoliday').textContent = s.holidays;
       document.getElementById('statWeekend').textContent = s.weekends;
       document.getElementById('statTotal').textContent = s.total;
       document.getElementById('statWorkSub').textContent = MONTH_NAMES[m];
