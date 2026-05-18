@@ -713,8 +713,9 @@
     // --- Init ---
     (function init() {
       document.getElementById('monthSelect').value = today.getMonth() + 1;
-      loadHolidaysForYear();
-      loadData();
+      loadHolidaysForYear().finally(
+        loadData()
+      );
     })();
 
     async function loadHolidaysForYear() {
