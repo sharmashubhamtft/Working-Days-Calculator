@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Israel Working Days & Holidays</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --bg: #F7F6F2;
+      --surface: #FFFFFF;
+      --surface2: #F0EFE9;
+      --border: #E2E0D8;
+      --text: #1A1916;
+      --text2: #6B6A63;
+      --text3: #A8A79F;
+      --blue: #1D6FBF;
+      --blue-light: #EAF2FB;
+      --green: #2E7D32;
+      --green-light: #E8F5E9;
+      --red: #C62828;
+      --red-light: #FFEBEE;
+      --amber: #E65100;
+      --amber-light: #FFF3E0;
+      --purple: #5E35B1;
+      --purple-light: #EDE7F6;
+      --radius: 10px;
+      --radius-lg: 16px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .holiday-sidebar {
+        order: -1;
+      }
+    }
+
+    /* Header */
+    .header {
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-left h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .header-left p {
+      font-size: .875rem;
+      color: var(--text2);
+      margin-top: .25rem;
+    }
+
+    .flag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: .35rem .85rem;
+      font-size: .8rem;
+      font-weight: 500;
+      color: var(--text2);
+    }
+
+    .flag-emoji {
+      font-size: 1.1rem;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    select {
+      appearance: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: .6rem 2.5rem .6rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    select:focus {
+      border-color: var(--blue);
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: .8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--text2);
+      font-size: .7rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .6rem 1.25rem;
+      border-radius: var(--radius);
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #333;
+    }
+
+    .btn-primary:active {
+      transform: scale(.98);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface2);
+    }
+
+    .loading-pill {
+      display: none;
+      align-items: center;
+      gap: .5rem;
+      font-size: .8rem;
+      color: var(--text2);
+      padding: .4rem .9rem;
+      background: var(--surface2);
+      border-radius: 40px;
+    }
+
+    .loading-pill.show {
+      display: inline-flex;
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: .75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+    }
+
+    .stat-label {
+      font-size: .72rem;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .3rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .stat-sub {
+      font-size: .75rem;
+      color: var(--text2);
+      margin-top: .15rem;
+    }
+
+    .stat.blue .stat-value {
+      color: var(--blue);
+    }
+
+    .stat.green .stat-value {
+      color: var(--green);
+    }
+
+    .stat.red .stat-value {
+      color: var(--red);
+    }
+
+    .stat.amber .stat-value {
+      color: var(--amber);
+    }
+
+    .stat.purple .stat-value {
+      color: var(--purple);
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .78rem;
+      color: var(--text2);
+      padding: .3rem .7rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-work {
+      background: #2196F3;
+    }
+
+    .dot-weekend {
+      background: #E0E0E0;
+    }
+
+    .dot-holiday {
+      background: #FF4444;
+    }
+
+    .dot-today {
+      background: #FFD700;
+      box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3);
+    }
+
+    /* Calendar */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .year-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .month-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
+
+    .month-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .month-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .month-count-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: .25rem .65rem;
+      border-radius: 40px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: .3rem;
+    }
+
+    .cal-dayname {
+      text-align: center;
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding: .4rem 0;
+    }
+
+    .weekend-name {
+      color: var(--text3);
+      opacity: 0.6;
+    }
+
+    .cal-cell {
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      font-size: .85rem;
+      font-weight: 500;
+      cursor: default;
+      transition: all .15s;
+    }
+
+    .cal-cell.empty {
+      opacity: 0;
+    }
+
+    .cal-cell.working {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .cal-cell.weekend {
+      background: var(--surface2);
+      color: var(--text3);
+    }
+
+    .cal-cell.holiday {
+      background: var(--red-light);
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    .cal-cell.today-cell {
+      box-shadow: 0 0 0 3px var(--amber);
+    }
+
+    .cal-cell:hover .cell-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .day-num {
+      z-index: 1;
+    }
+
+    .holiday-dot {
+      position: absolute;
+      bottom: 4px;
+      width: 4px;
+      height: 4px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+
+    .cell-tooltip {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: var(--text);
+      color: #fff;
+      font-size: .7rem;
+      padding: .4rem .65rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all .2s;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .cell-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: var(--text);
+    }
+
+    /* Holiday Sidebar */
+    .holiday-sidebar {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .holiday-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+    }
+
+    .holiday-section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .holiday-count {
+      font-size: .75rem;
+      font-weight: 500;
+      color: var(--red);
+      background: var(--red-light);
+      padding: .25rem .65rem;
+      border-radius: 40px;
+    }
+
+    .holiday-list {
+      max-height: 600px;
+      overflow-y: auto;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .holiday-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .holiday-list::-webkit-scrollbar-track {
+      background: var(--surface2);
+      border-radius: 3px;
+    }
+
+    .holiday-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .holiday-item {
+      padding: .85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .holiday-item:last-child {
+      border-bottom: none;
+    }
+
+    .holiday-date {
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: .3rem;
+    }
+
+    .holiday-name {
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: .2rem;
+    }
+
+    .holiday-type {
+      font-size: .7rem;
+      color: var(--text2);
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      padding: .2rem .5rem;
+      background: var(--surface2);
+      border-radius: 4px;
+      margin-top: .3rem;
+    }
+
+    .holiday-type-national {
+      background: var(--red-light);
+      color: var(--red);
+    }
+
+    .holiday-empty {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text3);
+      font-size: .875rem;
+    }
+
+    .error-banner {
+      background: var(--red-light);
+      color: var(--red);
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      display: none;
+      font-size: .875rem;
+    }
+
+    .error-banner.show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1>Israel Working Days & Holidays <span id="currentYear"></span></h1>
+        <p>Calculate working days with Israeli weekend (Fri-Sat) and public holidays</p>
+      </div>
+      <div>
+        <div class="flag-badge">
+          <span class="flag-emoji">🇮🇱</span>
+          <span>Israel</span>
+        </div>
+        <a class="flag-badge" href="./worktrack.html">
+          <span class="flag-emoji">➜]</span>
+          <span>WorkTrack-IL</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Error banner -->
+    <div class="error-banner" id="errorBanner"></div>
+
+    <div class="main-layout">
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Controls -->
+        <div class="controls">
+          <div class="select-wrap">
+            <select id="monthSelect" onchange="loadData()">
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <span class="select-arrow">▼</span>
+          </div>
+          <div id="currentYearDisplay"></div>
+          <div class="loading-pill" id="loadingPill">
+            <div class="spinner"></div>
+            <span>Loading...</span>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats" id="statsSection" style="display:none">
+          <div class="stat blue">
+            <div class="stat-label">Working days</div>
+            <div class="stat-value" id="statWork">—</div>
+            <div class="stat-sub" id="statWorkSub">across selected period</div>
+          </div>
+          <div class="stat red">
+            <div class="stat-label">Public holidays</div>
+            <div class="stat-value" id="statHoliday">—</div>
+            <div class="stat-sub">on weekdays</div>
+          </div>
+          <div class="stat amber">
+            <div class="stat-label">Weekend days</div>
+            <div class="stat-value" id="statWeekend">—</div>
+            <div class="stat-sub">Fri eve – Sat (Shabbat)</div>
+          </div>
+          <div class="stat green">
+            <div class="stat-label">Total days</div>
+            <div class="stat-value" id="statTotal">—</div>
+            <div class="stat-sub" id="statTotalSub">in period</div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+          <div class="legend-item">
+            <div class="dot dot-work"></div> Working day
+          </div>
+          <div class="legend-item">
+            <div class="dot dot-weekend"></div> Weekend (Fri–Sat)
+          </div>
+          <div class="legend-item">
+            <div class="dot dot-holiday"></div> Public holiday
+          </div>
+          <div class="legend-item">
+            <div class="dot dot-today"></div> Today
+          </div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="section-title" id="calTitle">Calendar</div>
+        <div class="year-grid" id="calendarArea"></div>
+      </div>
+
+      <!-- Holiday Sidebar -->
+      <div class="holiday-sidebar">
+        <div class="holiday-section">
+          <div class="holiday-section-title">
+            <span id="holidaySidebarTitle">Public Holidays</span>
+            <span class="holiday-count" id="holidayCount">0</span>
+          </div>
+          <ul class="holiday-list" id="holidayList">
+            <li class="holiday-empty">Loading holidays...</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const NINJAS_KEY = 'otUvsqQGsrDHhknRzBCv7SCGLlGWg8HBktoBTqXP';
+    const CALENDARIFIC_KEY = 'RoeZXRKuiBS9ueYmfGrINV8DCbSLRwxg';
+    const COUNTRY = 'IL';
+
+    const today = new Date();
+    let currentYear = today.getFullYear();
+
+    // API data
+    let apiWorkingSet = null;
+    let apiNonWorkingMap = null;
+    let numWorkingDays = 0;
+    let numNonWorkingDays = 0;
+    let allHolidays = []; // All holidays for the year from Calendarific
+    let currentMonthHolidays = []; // Filtered holidays for selected month
+
+    // --- Init ---
+    (function init() {
+      document.getElementById('monthSelect').value = today.getMonth() + 1;
+      loadHolidaysForYear().finally(
+        loadData()
+      );
+    })();
+
+    async function loadHolidaysForYear() {
+      try {
+        const url = `https://calendarific.com/api/v2/holidays?api_key=${CALENDARIFIC_KEY}&country=${COUNTRY}&year=${currentYear}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Failed to fetch holidays');
+        const data = await res.json();
+
+        // Filter to only National holidays (primary_type includes "Hebrew" or "National holiday")
+        allHolidays = (data.response?.holidays || []).filter(h => {
+          const type = h.primary_type?.toLowerCase() || '';
+          const types = (h.type || []).map(t => t.toLowerCase());
+          return type.includes('hebrew') || type.includes('national') ||
+            types.includes('national holiday');
+        });
+      } catch (e) {
+        console.error('Failed to load holidays:', e);
+        allHolidays = [];
+      }
+    }
+
+    async function loadData() {
+      setLoading(true);
+      hideError();
+      apiWorkingSet = null;
+      apiNonWorkingMap = null;
+      try {
+        await fetchWorkingDays();
+        filterHolidaysForMonth();
+        renderAll();
+      } catch (e) {
+        showError('Failed to load data: ' + e.message);
+      }
+      setLoading(false);
+    }
+
+    async function fetchWorkingDays() {
+      const m = parseInt(document.getElementById('monthSelect').value);
+      const url = `https://api.api-ninjas.com/v1/workingdays?country=${COUNTRY}&month=${m}`;
+      const res = await fetch(url, { headers: { 'X-Api-Key': NINJAS_KEY } });
+      if (!res.ok) throw new Error('API responded with status ' + res.status);
+      const data = await res.json();
+      parseApiData(data, m);
+    }
+
+    function parseApiData(data, m) {
+      numWorkingDays = data.num_working_days ?? 0;
+      numNonWorkingDays = data.num_non_working_days ?? 0;
+
+      apiWorkingSet = new Set(data.working_days || []);
+
+      apiNonWorkingMap = {};
+      (data.non_working_days || []).forEach(entry => {
+        apiNonWorkingMap[entry.date] = {
+          reasons: entry.reasons || [],
+          holiday_name: entry.holiday_name || null
+        };
+      });
+    }
+
+    function filterHolidaysForMonth() {
+      const m = parseInt(document.getElementById('monthSelect').value);
+      currentMonthHolidays = allHolidays.filter(h => {
+        const hDate = new Date(h.date.iso);
+        return hDate.getMonth() + 1 === m && hDate.getFullYear() === currentYear;
+      }).sort((a, b) => {
+        return new Date(a.date.iso) - new Date(b.date.iso);
+      });
+    }
+
+    function getDayInfo(dateStr) {
+      // Check if it's a working day from API
+      if (apiWorkingSet && apiWorkingSet.has(dateStr)) {
+        return { type: 'working', holidayName: null };
+      }
+
+      // Check non-working days from API
+      if (apiNonWorkingMap && apiNonWorkingMap[dateStr]) {
+        const entry = apiNonWorkingMap[dateStr];
+        const reasons = entry.reasons.map(r => r.toLowerCase());
+        const isHoliday = reasons.some(r => r.includes('holiday'));
+
+        // If it's marked as holiday, get the name from Calendarific data
+        let holidayName = entry.holiday_name;
+        if (isHoliday) {
+          const holiday = allHolidays.find(h => h.date.iso === dateStr);
+          if (holiday) {
+            holidayName = holiday.name;
+          }
+        }
+
+        return {
+          type: isHoliday ? 'holiday' : 'weekend',
+          holidayName: holidayName
+        };
+      }
+
+      // Fallback
+      return { type: 'working', holidayName: null };
+    }
+
+    function dateKey(date) {
+      const y = date.getFullYear();
+      const mo = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}-${mo}-${d}`;
+    }
+
+    function daysInMonth(y, m) {
+      return new Date(y, m, 0).getDate();
+    }
+
+    function calcMonthStats(year, month) {
+      let working = 0,
+        holidays = 0,
+        weekends = 0;
+
+      const total = daysInMonth(year, month);
+
+      for (let d = 1; d <= total; d++) {
+        const date = new Date(year, month - 1, d);
+
+        const day = date.getDay(); // 0=Sun ... 5=Fri 6=Sat
+        const key = dateKey(date);
+
+        const isWeekend = (day === 5 || day === 6);
+
+        // Check holiday
+        const holiday = allHolidays.find(h => h.date.iso === key);
+        const isHoliday = !!holiday;
+
+        // Weekend
+        if (isWeekend) {
+          weekends++;
+
+          // Do NOT subtract holiday again if already weekend
+          continue;
+        }
+
+        // Weekday holiday
+        if (isHoliday) {
+          holidays++;
+          continue;
+        }
+
+        // Actual working day
+        working++;
+      }
+
+      return {
+        working,
+        holidays,
+        weekends,
+        total
+      };
+    }
+
+    function renderAll() {
+      const m = parseInt(document.getElementById('monthSelect').value);
+      renderCalendar(m);
+      renderStats(m);
+      renderHolidaySidebar(m);
+    }
+
+    const MONTH_NAMES = ['', 'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+    const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    function renderCalendar(m) {
+      const area = document.getElementById('calendarArea');
+      area.innerHTML = '';
+      document.getElementById('calTitle').textContent = `${MONTH_NAMES[m]} ${currentYear}`;
+      document.getElementById('currentYear').textContent = currentYear;
+      document.getElementById('currentYearDisplay').textContent = currentYear;
+
+      const stats = calcMonthStats(currentYear, m);
+
+      const card = document.createElement('div');
+      card.className = 'month-card';
+
+      // Header
+      const hdr = document.createElement('div');
+      hdr.className = 'month-header';
+      hdr.innerHTML = `<span class="month-name">${MONTH_NAMES[m]} ${currentYear}</span><span class="month-count-badge">${stats.working} working days</span>`;
+      card.appendChild(hdr);
+
+      // Day name headers
+      const grid = document.createElement('div');
+      grid.className = 'cal-grid';
+      DAY_NAMES.forEach((dn, i) => {
+        const cell = document.createElement('div');
+        cell.className = 'cal-dayname' + (i === 5 || i === 6 ? ' weekend-name' : '');
+        cell.textContent = dn;
+        grid.appendChild(cell);
+      });
+
+      // Empty cells before the 1st
+      const firstDay = new Date(currentYear, m - 1, 1).getDay();
+      for (let i = 0; i < firstDay; i++) {
+        const e = document.createElement('div');
+        e.className = 'cal-cell empty';
+        grid.appendChild(e);
+      }
+
+      // Day cells
+      const total = daysInMonth(currentYear, m);
+
+      for (let d = 1; d <= total; d++) {
+        const date = new Date(currentYear, m - 1, d);
+        const key = dateKey(date);
+
+        const day = date.getDay();
+        const isWeekend = (day === 5 || day === 6);
+
+        // Find holiday
+        const holiday = allHolidays.find(h => h.date.iso === key);
+
+        let type = 'working';
+
+        if (isWeekend) {
+          type = 'weekend';
+        }
+
+        // Holiday overrides weekend color
+        if (holiday) {
+          type = 'holiday';
+        }
+
+        const isToday = date.toDateString() === today.toDateString();
+
+        const cell = document.createElement('div');
+        cell.className = 'cal-cell ' + type + (isToday ? ' today-cell' : '');
+
+        // Day number
+        const numEl = document.createElement('div');
+        numEl.className = 'day-num';
+        numEl.textContent = d;
+        cell.appendChild(numEl);
+
+        // Add holiday indicator + tooltip
+        if (holiday) {
+          const dot = document.createElement('div');
+          dot.className = 'holiday-dot';
+          cell.appendChild(dot);
+
+          const tip = document.createElement('div');
+          tip.className = 'cell-tooltip';
+
+          // Holiday name on hover
+          tip.innerHTML = `
+      <strong>${holiday.name}</strong><br>
+      ${holiday.primary_type || ''}
+    `;
+
+          cell.appendChild(tip);
+        }
+
+        grid.appendChild(cell);
+      }
+
+      card.appendChild(grid);
+      area.appendChild(card);
+    }
+
+    function renderStats(m) {
+      const s = calcMonthStats(currentYear, m);
+      document.getElementById('statWork').textContent = s.working;
+      document.getElementById('statHoliday').textContent = s.holidays;
+      document.getElementById('statWeekend').textContent = s.weekends;
+      document.getElementById('statTotal').textContent = s.total;
+      document.getElementById('statWorkSub').textContent = MONTH_NAMES[m];
+      document.getElementById('statTotalSub').textContent = 'calendar days';
+      document.getElementById('statsSection').style.display = '';
+    }
+
+    function renderHolidaySidebar(m) {
+      const list = document.getElementById('holidayList');
+      const count = document.getElementById('holidayCount');
+      const title = document.getElementById('holidaySidebarTitle');
+
+      title.textContent = `${MONTH_NAMES[m]} Holidays`;
+      count.textContent = currentMonthHolidays.length;
+
+      if (currentMonthHolidays.length === 0) {
+        list.innerHTML = '<li class="holiday-empty">No public holidays this month</li>';
+        return;
+      }
+
+      list.innerHTML = '';
+      currentMonthHolidays.forEach(h => {
+        const li = document.createElement('li');
+        li.className = 'holiday-item';
+
+        const date = new Date(h.date.iso);
+        const dateStr = date.toLocaleDateString('en-US', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short'
+        });
+
+        const isNational = h.type.some(t => t.toLowerCase().includes('national'));
+        const typeClass = isNational ? 'holiday-type-national' : '';
+
+        li.innerHTML = `
+          <div class="holiday-date">${dateStr}</div>
+          <div class="holiday-name">${h.name}</div>
+          <div class="holiday-type ${typeClass}">${h.primary_type}</div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function setLoading(v) {
+      document.getElementById('loadingPill').classList.toggle('show', v);
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('errorBanner');
+      el.textContent = msg;
+      el.classList.add('show');
+    }
+
+    function hideError() {
+      document.getElementById('errorBanner').classList.remove('show');
+    }
+  </script>
+</body>
+
+</html>
