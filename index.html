@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Israel Working Days & Holidays 2026</title>
+  <title>Israel Working Days & Holidays</title>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap"
     rel="stylesheet">
@@ -594,7 +594,7 @@
     <!-- Header -->
     <div class="header">
       <div class="header-left">
-        <h1>Israel Working Days & Holidays <span id="currentYear">2026</span></h1>
+        <h1>Israel Working Days & Holidays <span id="currentYear"></span></h1>
         <p>Calculate working days with Israeli weekend (Fri-Sat) and public holidays</p>
       </div>
       <div class="flag-badge">
@@ -628,6 +628,7 @@
             </select>
             <span class="select-arrow">▼</span>
           </div>
+          <div id="currentYearDisplay"></div>
           <div class="loading-pill" id="loadingPill">
             <div class="spinner"></div>
             <span>Loading...</span>
@@ -889,7 +890,9 @@
       const area = document.getElementById('calendarArea');
       area.innerHTML = '';
       document.getElementById('calTitle').textContent = `${MONTH_NAMES[m]} ${currentYear}`;
-
+      document.getElementById('currentYear').textContent = currentYear;
+      document.getElementById('currentYearDisplay').textContent = currentYear;
+      
       const stats = calcMonthStats(currentYear, m);
 
       const card = document.createElement('div');
@@ -921,43 +924,6 @@
 
       // Day cells
       const total = daysInMonth(currentYear, m);
-      // for (let d = 1; d <= total; d++) {
-      //   const date = new Date(currentYear, m - 1, d);
-      //   const key = dateKey(date);
-      //   const { type, holidayName } = getDayInfo(key);
-      //   const isToday = date.toDateString() === today.toDateString();
-
-      //   const cell = document.createElement('div');
-      //   cell.className = 'cal-cell ' + type + (isToday ? ' today-cell' : '');
-
-      //   const numEl = document.createElement('div');
-      //   numEl.className = 'day-num';
-      //   numEl.textContent = d;
-      //   cell.appendChild(numEl);
-
-      //   if (type === 'holiday' && holidayName) {
-      //     const dot = document.createElement('div');
-      //     dot.className = 'holiday-dot';
-      //     cell.appendChild(dot);
-
-      //     const tip = document.createElement('div');
-      //     tip.className = 'cell-tooltip';
-      //     tip.textContent = holidayName;
-      //     cell.appendChild(tip);
-      //   }
-
-      //   if (isToday && type === 'weekend') {
-      //     const tip = document.createElement('div');
-      //     tip.className = 'cell-tooltip';
-      //     tip.textContent = 'Today (weekend)';
-      //     cell.appendChild(tip);
-      //   }
-
-      //   const getCurrentYearElement = document.getElementById('currentYear');
-      //   getCurrentYearElement.innerHTML = currentYear;
-
-      //   grid.appendChild(cell);
-      // }
 
       for (let d = 1; d <= total; d++) {
         const date = new Date(currentYear, m - 1, d);
